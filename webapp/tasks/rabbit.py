@@ -64,7 +64,7 @@ def listen_awspqc_record():
         message.ack()
         with db.app.app_context():
             timestamp = string.atof(body['timestamp'])
-            now = datetime.datetime.utcfromtimestamp(timestamp).utcnow()
+            now = datetime.datetime.utcfromtimestamp(timestamp)
             aws = body['aws']
             inter = body['inter']
             nocenter = body['nocenter']
@@ -124,7 +124,7 @@ def listen_regcenter():
             f = urllib.urlopen('http://10.116.32.88/stationinfo/index.php/Api/stationInfoLast?type=json')
             data = json.loads(f.read())
             timestamp = string.atof(body['timestamp'])
-            now = datetime.datetime.utcfromtimestamp(timestamp).utcnow()
+            now = datetime.datetime.utcfromtimestamp(timestamp)
             carrival = body['isarr']
             battery = body['battery']
             sqlstr = text("data_day=:data_day and " + "a" + now.strftime('%H') + "=1")
@@ -175,7 +175,7 @@ def listen_regcenter_record():
         message.ack()
         with db.app.app_context():
             timestamp = string.atof(body['timestamp'])
-            now = datetime.datetime.utcfromtimestamp(timestamp).utcnow()
+            now = datetime.datetime.utcfromtimestamp(timestamp)
             carrivals = body['isarr']
             batterys = body['battery']
             for ca in carrivals:
