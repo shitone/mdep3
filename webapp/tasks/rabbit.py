@@ -7,6 +7,7 @@ from kombu import Connection, Queue
 from ..models import AwsArrival, AwsSource, RegCenterArrival, AwsBattery
 from config import Basic
 from sqlalchemy.sql import text
+import re
 
 
 def listen_awspqc():
@@ -191,7 +192,7 @@ def listen_regcenter_record():
                 init_dict = dict()
                 init_dict['data_day'] = now.date()
                 init_dict['station_number'] = btr
-                if batterys[btr] == None:
+                if (batterys[btr] is None) or (not re.match(r'-?\d+(\.\d+)?', batterys[btr])):
                     init_dict['b'+ now.strftime('%H')] = -1.0
                 else:
                     init_dict['b'+ now.strftime('%H')] = float(batterys[btr])
